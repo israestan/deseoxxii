@@ -285,7 +285,7 @@ function triggerDespliegueDeCarta() {
                     Si estás leyendo esto es que me conoces lo suficiente como para haber descifrado esta carta. Eso es bueno y te lo agradezco mucho.
                     Te quiero hacer llegar mis más profundas felicidades hoy en tu día especial. De todo corazón, espero que este jueguito haya cautivado algo en ti. Sé que no es lo que me pediste específicamente pero mencionaste la idea de juegos e innevitablemente me inspiré por la obra que más tiempo lleva conmigo en mi vida. 
                     También quiero agradecerte por estos meses que nos hemos conocido y por la amistad que no dudaste en brindarme. Me ayudas bastante a recordar lecciones que olvido con demasiada facilidad y a no caer en el absoluto aislamiento.
-                    Con el corazón en un puño quiero dedicarte lo mejor para este nuevo año de vida que comienzas y que recordarte que no debes permitir que tu luz deje de brillar nunca. Te irá bien, pudiste con lo que se te puso en frente y podrás con lo que se te viene. 
+                    Con el corazón en un puño quiero dedicarte lo mejor para este nuevo año de vida que comienzas y recordarte que no debes permitir que tu luz deje de brillar nunca. Te irá bien, pudiste con lo que se te puso en frente y podrás con lo que se te viene. 
                     Suerte y mis mejores deseos para ti, Raquel.
                     </p>
                 </div>
