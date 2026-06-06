@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destiny 2 // Virtuosa</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body data-view="splash">
+
+    <div id="destiny-cursor"></div>
+
+    <audio id="bg-music" loop>
+        <source src="assets/audio/final_shape.mp3" type="audio/mpeg">
+    </audio>
+
+    <section id="view-splash" class="game-view" data-target="orbit">
+        <div class="splash-content">
+            <img src="assets/icons/destiny.png" alt="Icono Vanguardia" class="splash-icon">
+            <span class="player-name">R A Q U E L</span>
+            <div class="destiny-logo">// V I R T U O S A</div>       
+            <p class="blink-text">PULSA EN CUALQUIER LADO PARA EMPEZAR</p>
+        </div>
+    </section>
+
+    <section id="view-orbit" class="game-view">
+        <header class="orbit-header">
+            <span class="vanguard-tag">DIRECTOR // ÓRBITA</span>
+            <h1>ELIGE TU DESTINO</h1>
+        </header>
+
+        <div class="director-map">
+            <div class="destination-node" data-target="tower">
+                <div class="node-icon node-tower"></div>
+                <div class="node-info">
+                    <h3>LA TORRE</h3>
+                    <p>Tu refugio.</p>
+                </div>
+            </div>
+
+            <div class="destination-node" data-target="venus">
+                <div class="node-icon node-raid"></div>
+                <div class="node-info">
+                    <span class="raid-tag">INCURSIÓN</span>
+                    <h3>EL DESEO XXII</h3>
+                    <p>"La oportunidad de una vida entera"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="view-tower" class="game-view">
+        <button class="back-btn" data-target="orbit">← VOLVER AL DIRECTOR</button>
+        
+        <div class="view-container tower-interface">
+            <header class="guardian-banner">
+                <div class="banner-decor"></div>
+                <div class="banner-info">
+                    <span class="title-seal">TÍTULO // <strong class="exotic-color">VIRTUOSA</strong></span>
+                    <h2>RAQUEL // NIVEL XXII</h2>
+                </div>
+            </header>
+
+            <div class="triumphs-section">
+                <h3>TRIUNFOS DESBLOQUEADOS</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon-box fe"></div>
+                        <div class="stat-details">
+                            <span class="stat-label">FE INQUEBRANTABLE</span>
+                            <span class="stat-value">MÁXIMA</span>
+                            <p class="stat-desc">Conexión profunda con la fe. Aunque el panorama le sea pesimista y desesperanzador, en el fondo sabe del propósito que se le concedió.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon-box voluntad"></div>
+                        <div class="stat-details">
+                            <span class="stat-label">VOLUNTAD DE HIERRO</span>
+                            <span class="stat-value">RECONSTRUIDA</span>
+                            <p class="stat-desc">Capacidad para transformar las secuelas físicas y accidentes del pasado en pura resiliencia.</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon-box charisma"></div>
+                        <div class="stat-details">
+                            <span class="stat-label">CARISMA</span>
+                            <span class="stat-value">CERCANA</span>
+                            <p class="stat-desc">De naturaleza extrovertida y cercana. Facilidad innata para sacarle las palabras hasta al más callado.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon-box percepcion"></div>
+                        <div class="stat-details">
+                            <span class="stat-label">PERCEPCIÓN DE SÍ MISMA</span>
+                            <span class="stat-value">EN ASCENSO</span>
+                            <p class="stat-desc">El reflejo de una Guardiana hermosa, imponente y digna.</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon-box dev-subclass"></div>
+                        <div class="stat-details">
+                            <span class="stat-label">FORJA DE CÓDIGO // PROGRAMADORA</span>
+                            <span class="stat-value">LÍNEAS DE CÓDIGO: ∞</span>
+                            <p class="stat-desc">Un gran futuro que se deja entrever con éxito.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="team-lore-box">
+                <div class="lore-tag">// LORE</div>
+                <h4>EL CAMINO DE LA VIRTUOSA</h4>
+                <p>"Su historia está marcada por cicatrices de accidentes, lazos rotos y errores del pasado.</p>
+                <br>
+                <p>Caminó por el borde del abismo y conoció la dependencia de los falsos destellos, pero eligió no perder el tiempo y aprender. Con las manos gastadas y el corazón aferrado, Raquel se levantó, reconstruyó y reprogramó su vida.</p>
+                <br>
+                <p>Hoy, su Luz radia un futuro prometedor y esperanzador. No está sola." — *Manuscrito, Sección XXII*</p>
+            </footer>
+        </div>
+    </section>
+
+    <!-- 4. DESTINO: VENUS (INCURSIÓN: XXII DESEO // MINI-JUEGO) -->
+    <section id="view-venus" class="game-view">
+        <button class="back-btn" data-target="orbit">← VOLVER AL DIRECTOR</button>
+
+        <div class="raid-layout">
+            <!-- COLUMNA IZQUIERDA: LOS ENCUENTROS (PREGUNTAS) -->
+            <div class="raid-challenges-column">
+                <div class="encounter-card active" id="launch-box" style="text-align: center; padding: 50px 30px;">
+                    <span class="encounter-phase">// CONTRATO DE AVENTURA EXCEPCIONAL ACTIVADO</span>
+                    <h2 style="font-size: 1.8rem; letter-spacing: 3px; margin-bottom: 15px; text-transform: uppercase;">EL DESEO XXII</h2>
+                    
+                    <p class="question-text" style="max-width: 500px; margin: 0 auto 35px auto;">Un recién conocido desea darte los buenos deseos. <br> Cuatro encuentros, cuatro preguntas y un deseo por descifrar.</p>
+                    <button id="btn-start-raid" class="back-btn" style="
+                        background-color: var(--vanguard-blue);
+                        color: #0b0e12;
+                        padding: 15px 40px;
+                        font-size: 1rem;
+                        font-weight: bold;
+                        letter-spacing: 2px;
+                        border: 1px solid #ffffff;
+                        box-shadow: 0 0 15px rgba(0, 235, 199, 0.3);
+                        align-self: center;
+                        transition: all 0.3s ease;
+                    ">COMENZAR INCURSIÓN</button>
+                </div>
+
+                <div class="encounter-card" id="encounter-box" style="display: none;">
+                    <span class="encounter-phase">// ENCUENTRO ACTUAL</span>
+                    <h2 id="encounter-title">CARGANDO ENCUENTRO...</h2>
+                    <p id="encounter-question" class="question-text">Preparando los archivos...</p>
+                    
+                    <div class="options-grid" id="options-container"></div>
+                    <p id="feedback-text" class="feedback-message"></p>
+                </div>
+            </div>
+
+            <!-- COLUMNA DERECHA: LA QUEST EXCEPCIONAL (Diseño exacto de capturas) -->
+            <div class="raid-quest-column">
+                <div class="exotic-quest-card">
+                    <!-- Encabezado Dorado Excepcional (Basado en Xenology - image_2a2be8.jpg) -->
+                    <header class="quest-header-gold">
+                        <div class="quest-title-group">
+                            <h2>EL DESEO XXII</h2>
+                            <span class="quest-subtitle">Aventura Excepcional</span>
+                        </div>
+                    </header>
+
+                    <div class="quest-body">
+                        <p class="quest-description">Completa todos los encuentros lógicos de la incursión para descifrar la carta.</p>
+                        
+                        <div class="quest-warning">
+                            <span class="warning-icon">⚠️</span>
+                            <p>Esta aventura requiere máxima resiliencia.</p>
+                        </div>
+
+                        <div class="quest-objectives-list">
+                            <div class="objective-item" id="obj-1">
+                                <div class="checkbox-box"></div>
+                                <span class="objective-text">Primer Encuentro: Cortafuegos anulado</span>
+                            </div>
+                            <div class="objective-item" id="obj-2">
+                                <div class="checkbox-box"></div>
+                                <span class="objective-text">Segundo Encuentro: Oráculos suprimidos</span>
+                            </div>
+                            <div class="objective-item" id="obj-3">
+                                <div class="checkbox-box"></div>
+                                <span class="objective-text">Tercer Encuentro: Mente Consgrada eliminada</span>
+                            </div>
+                            <div class="objective-item" id="obj-4">
+                                <div class="checkbox-box"></div>
+                                <span class="objective-text">Cámara de EL DESEO XXII conquistada</span>
+                            </div>
+                        </div>
+
+                        <div class="quest-rewards-section">
+                            <h4>RECOMPENSAS POTENCIALES</h4>
+                            <div class="reward-item">
+                                <div class="reward-icon-exotic">📜</div>
+                                <span class="reward-name">Carta_Felicidades.crypt</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

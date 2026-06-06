@@ -1,0 +1,761 @@
+/* ==========================================================================
+   1. PALETA DE COLORES Y VARIABLES (DESTINY 2)
+   ========================================================================== */
+:root {
+    --bg-dark: #0b0e12;
+    --bg-card: rgba(20, 26, 33, 0.85);
+    --text-white: #f5f5f5;
+    --text-muted: #8a96a3;
+    --vanguard-blue: #00ebc7;
+    --exotic-gold: #f5cb42;
+}
+
+/* ==========================================================================
+   2. CONFIGURACIÓN BASE Y RESET
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    cursor: none;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* ==========================================================================
+   3. CURSOR INTELIGENTE INTERACTIVO
+   ========================================================================== */
+#destiny-cursor {
+    width: 60px;
+    height: 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+    transition: width 0.2s ease, height 0.2s ease, transform 0.1s ease;
+    border: none !important;
+    background: none !important;
+}
+
+#destiny-cursor::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 60%, transparent 70%);
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+#destiny-cursor::before::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #3e444d;
+    opacity: 0.9;
+}
+
+#destiny-cursor.hovering {
+    width: 80px;
+    height: 80px;
+}
+
+#destiny-cursor.hovering::before {
+    background: radial-gradient(circle, rgba(0, 235, 199, 0.5) 0%, rgba(0, 235, 199, 0.2) 60%, transparent 70%);
+    box-shadow: inset 0 0 0 2px rgba(0, 235, 199, 0.3);
+}
+
+#destiny-cursor.hovering::before::after {
+    width: 48px;
+    height: 48px;
+    background-color: transparent;
+    opacity: 1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='none' stroke='%2300ebc7' stroke-width='4' stroke-dasharray='30 10 30 10' d='M50 10 A40 40 0 1 1 49.9 10Z'/%3E%3C/svg%3E");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    filter: drop-shadow(0 0 2px rgba(0, 235, 199, 0.6));
+}
+
+/* ==========================================================================
+   4. ARQUITECTURA DE VISTAS (SPA PATTERN)
+   ========================================================================== */
+.game-view {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    padding: 6% 8% 4% 8%; /* Espaciado balanceado */
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; 
+}
+
+body[data-view="splash"] #view-splash,
+body[data-view="orbit"] #view-orbit,
+body[data-view="tower"] #view-tower,
+body[data-view="venus"] #view-venus {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Custom Scrollbar */
+.game-view::-webkit-scrollbar { width: 6px; }
+.game-view::-webkit-scrollbar-track { background: transparent; }
+.game-view::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 3px; }
+.game-view::-webkit-scrollbar-thumb:hover { background: var(--vanguard-blue); }
+
+/* ==========================================================================
+   5. PANTALLA DE INICIO (SPLASH SCREEN)
+   ========================================================================== */
+#view-splash {
+    background: radial-gradient(circle, #161f2b 0%, var(--bg-dark) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.splash-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: entradaCinematica 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.splash-icon {
+    width: 200px;
+    height: auto;
+    margin-bottom: 25px;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
+    opacity: 0.9;
+}
+
+.player-name {
+    color: var(--text-muted);
+    font-size: 5rem;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    font-weight: 400;
+}
+
+.destiny-logo {
+    font-size: 3rem;
+    letter-spacing: 8px;
+    margin-bottom: 20px;
+    font-weight: 300;
+}
+
+.blink-text {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    animation: pulse 2s infinite;
+}
+
+/* ==========================================================================
+   6. ÓRBITA / EL DIRECTOR DE DESTINOS
+   ========================================================================== */
+#view-orbit {
+    background-color: #0b0e12;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        radial-gradient(circle at 50% 160%, #3a4b5c 0%, #16222f 30%, #0b0e12 60%);
+    background-size: 60px 60px, 60px 60px, 100% 100%;
+    padding-top: 4%;
+}
+
+#view-orbit::after {
+    content: '';
+    position: absolute;
+    bottom: -10%;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: radial-gradient(ellipse at 50% 100%, rgba(0, 235, 199, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.orbit-header {
+    border-left: 3px solid var(--vanguard-blue);
+    padding-left: 15px;
+    margin-bottom: 20px;
+    z-index: 2;
+}
+
+.vanguard-tag {
+    color: var(--vanguard-blue);
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+}
+
+.director-map {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    z-index: 2;
+}
+
+.destination-node {
+    background: transparent;
+    border: none;
+    padding: 0;
+    width: 300px;            
+    height: 260px;          
+    display: flex;
+    flex-direction: column;  
+    justify-content: center; 
+    align-items: center;    
+    text-align: center;      
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.destination-node:hover {
+    transform: scale(1.08); 
+}
+
+.node-icon {
+    width: 140px; 
+    height: 140px;
+    margin: 0 auto 15px auto;
+    border-radius: 50%;      
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6); 
+    flex-shrink: 0;
+}
+
+.node-tower { 
+    background-image: url('../assets/icons/traveller.svg');
+    background-size: 70%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(255, 255, 255, 0.05); 
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.node-raid { 
+    background-image: url('../assets/icons/raid.svg');
+    background-size: 80%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    filter: invert(1);
+    transition: all 0.3s ease;
+}
+
+.destination-node:hover .node-tower,
+.destination-node:hover .node-raid {
+    background-color: rgba(0, 235, 199, 0.1); 
+    border-color: var(--vanguard-blue);
+    box-shadow: 0 0 15px rgba(0, 235, 199, 0.3);
+}
+
+.node-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%; 
+}
+
+.destination-node h3 {
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 3px;     
+    color: var(--text-white);
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.destination-node p {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 6px;
+    max-width: 250px;        
+    line-height: 1.4;
+}
+
+.raid-tag {
+    color: #f94144;
+    font-size: 0.75rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+}
+
+/* ==========================================================================
+   7. INTERFAZ DE DESTINOS: LA TORRE Y LORE
+   ========================================================================== */
+#view-tower {
+    padding-top: 4%; /* Corrección del margen del top */
+}
+
+.tower-interface {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    max-width: 900px;
+    margin: 0 auto;
+    animation: entradaCinematica 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.guardian-banner {
+    background: linear-gradient(90deg, rgba(20, 26, 33, 0.9) 0%, rgba(11, 14, 18, 0.4) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 5px solid var(--exotic-gold); 
+    padding: 25px 35px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.title-seal {
+    display: block;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+
+.guardian-banner h2 {
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: 4px;
+    color: var(--text-white);
+    text-transform: uppercase;
+}
+
+.triumphs-section h3 {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 8px;
+}
+
+.stats-grid {
+    display: flex;
+    flex-direction: column; 
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.stat-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 20px 25px;
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    gap: 25px;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(30, 38, 48, 0.6);
+    transform: translateX(5px);
+}
+
+.stat-icon-box {
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
+}
+
+/* Iconos de Triunfos Individuales */
+.stat-icon-box.fe { background: linear-gradient(135deg, #ffd700, #ffffff); border-color: #ffd700; }
+.stat-icon-box.voluntad { background: linear-gradient(135deg, #535c68, #ff7675); border-color: #ff7675; }
+.stat-icon-box.charisma { background: linear-gradient(135deg, #00cec9, #6c5ce7); border-color: #6c5ce7; }
+.stat-icon-box.percepcion { background: linear-gradient(135deg, #ff007f, #f5cb42); border-color: #f5cb42; }
+.stat-icon-box.dev-subclass { 
+    background: linear-gradient(135deg, #00ebc7, #005f73); 
+    border-color: #00ebc7; 
+    box-shadow: 0 0 10px rgba(0, 235, 199, 0.2);
+}
+
+.stat-details {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.stat-value {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--text-white);
+    margin: 2px 0;
+}
+
+.stat-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+/* Bloque de Lore Especial */
+.team-lore-box {
+    background: rgba(11, 14, 18, 0.8);
+    border: 1px solid rgba(0, 235, 199, 0.15);
+    padding: 25px;
+    margin-top: 15px;
+}
+
+.lore-tag {
+    color: var(--vanguard-blue);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+}
+
+.team-lore-box h4 {
+    font-size: 1rem;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.team-lore-box p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #b1b9c2;
+    font-style: italic;
+}
+
+/* Interfaz del Contrato Excepcional (Venus) */
+.exotic-color { color: var(--exotic-gold); }
+.exotic-tag { color: var(--exotic-gold); font-size: 0.8rem; letter-spacing: 2px; }
+
+.lore-container {
+    background: rgba(11, 14, 18, 0.9);
+    border: 1px solid rgba(245, 203, 66, 0.2);
+    padding: 40px;
+    max-width: 800px;
+    margin: auto;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+}
+
+.destiny-divider {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, var(--exotic-gold), transparent);
+    margin: 20px 0;
+}
+
+.lore-body {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #d1d7de;
+    white-space: pre-line;
+}
+
+/* Botones de Retorno Comunes */
+.back-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    padding: 5px 0;
+    text-transform: uppercase;
+    align-self: flex-start;
+    transition: color 0.2s ease, transform 0.2s ease;
+    z-index: 10;
+}
+
+.back-btn:hover {
+    color: var(--text-white);
+    transform: translateX(-5px);
+}
+
+/* ==========================================================================
+   8. SISTEMA DE ANIMACIONES (KEYFRAMES)
+   ========================================================================== */
+@keyframes entradaCinematica {
+    0% {
+        transform: scale(2.5);
+        filter: blur(20px);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        filter: blur(0px);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+/* ==========================================================================
+   9. VISTA DE LA RAID (PREGUNTAS + QUEST EXCEPCIONAL)
+   ========================================================================== */
+
+/* Contenedor en dos columnas */
+.raid-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr; /* Columna izquierda un poco más ancha */
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: start;
+    animation: entradaCinematica 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* --- COLUMNA IZQUIERDA: TARJETA DE PREGUNTAS --- */
+.encounter-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-left: 4px solid var(--vanguard-blue);
+    padding: 35px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.encounter-phase {
+    color: var(--vanguard-blue);
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.question-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #d1d7de;
+    margin: 20px 0 30px 0;
+}
+
+.options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.option-btn {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-white);
+    padding: 15px 20px;
+    text-align: left;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.option-btn:hover {
+    background: rgba(0, 235, 199, 0.08);
+    border-color: var(--vanguard-blue);
+    transform: translateX(5px);
+}
+
+.feedback-message {
+    margin-top: 20px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    min-height: 24px;
+}
+
+/* --- COLUMNA DERECHA: QUEST EXCEPCIONAL (Fiel a las capturas) --- */
+.exotic-quest-card {
+    background: #12181f; /* Fondo oscuro exacto de las tarjetas de Destiny */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Encabezado dorado de Xenology (image_2a2be8.jpg) */
+.quest-header-gold {
+    background: #ceae31; /* El tono ocre/dorado excepcional */
+    color: #0b0e12;      /* Texto oscuro para contraste */
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.quest-title-group h2 {
+    font-size: 1.4rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.quest-subtitle {
+    font-size: 0.8rem;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+.quest-step {
+    font-size: 0.85rem;
+    font-weight: bold;
+    opacity: 0.7;
+}
+
+/* Cuerpo interno de la aventura */
+.quest-body {
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.quest-description {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-white);
+}
+
+/* Alerta naranja interna */
+.quest-warning {
+    display: flex;
+    gap: 10px;
+    color: #d17e36; /* Color naranja de advertencia de la captura */
+    font-size: 0.85rem;
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+/* Lista de objetivos estilo Deepsight Signal (image_2a2c40.jpg) */
+.quest-objectives-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 10px 0;
+}
+
+.objective-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+    color: #c3c9cf;
+}
+
+/* El cuadradito del checklist */
+.checkbox-box {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #555e66;
+    background: transparent;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+/* Estado completado: el característico verde opaco con check de Destiny */
+.objective-item.completed .checkbox-box {
+    background: #497556; /* Verde exacto de Deepsight Signal */
+    border-color: #497556;
+    position: relative;
+}
+
+.objective-item.completed .checkbox-box::after {
+    content: '✓';
+    position: absolute;
+    color: #12181f;
+    font-size: 0.75rem;
+    font-weight: bold;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.objective-item.completed .objective-text {
+    color: var(--text-muted);
+    text-decoration: line-through;
+}
+
+/* Sección de Recompensas */
+.quest-rewards-section h4 {
+    color: #61a06e; /* Verde de POTENTIAL REWARDS de las capturas */
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.reward-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.reward-icon-exotic {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #ceae31, #f5cb42);
+    border: 1px solid #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+    box-shadow: 0 0 8px rgba(245, 203, 66, 0.4);
+}
+
+.reward-name {
+    font-size: 0.88rem;
+    font-weight: bold;
+    color: var(--text-white);
+}
+
+/* Barra inferior interactiva de botones estilo juego */
+.quest-footer-bar {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: #090d12;
+    padding: 12px 20px;
+    display: flex;
+    gap: 20px;
+    font-size: 0.8rem;
+    color: #8a96a3;
+    font-weight: 600;
+}
+
+.quest-footer-bar span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
